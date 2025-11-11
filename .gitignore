@@ -101,3 +101,6 @@ Dockerfile
 api-keys.json
 keys/*
 !keys/README.md
+
+# Demo files
+iat-js-demo/

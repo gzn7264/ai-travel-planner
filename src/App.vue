@@ -37,6 +37,7 @@ onMounted(() => {
           <router-link to="/">首页</router-link>
           <router-link to="/plan">创建计划</router-link>
           <router-link to="/budget">预算管理</router-link>
+          <router-link to="/speech-test">语音测试</router-link>
           <router-link to="/settings">设置</router-link>
           <button class="logout-btn" @click="handleLogout">退出</button>
         </div>
@@ -44,6 +45,7 @@ onMounted(() => {
         <div class="nav-links" v-else>
           <router-link to="/login">登录</router-link>
           <router-link to="/register">注册</router-link>
+          <router-link to="/speech-test">语音测试</router-link>
         </div>
       </div>
     </nav>

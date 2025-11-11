@@ -196,7 +196,9 @@ export const auth = {
 // 导出api对象供其他模块使用
 export const api = {
   auth,
-  speech
+  speech,
+  plans: {}, // 占位模块，用于planStore
+  budget: {} // 占位模块，用于budgetStore
 };
 
 // 导出API对象
@@ -204,3 +206,7 @@ export default {
   api: apiClient,
   ...api
 };
+
+// 单独导出各个模块，供store使用
+export const plan = api.plans
+export const budget = api.budget

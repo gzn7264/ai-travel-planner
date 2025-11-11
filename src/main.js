@@ -13,3 +13,6 @@ app.use(router)
 
 // 挂载应用
 app.mount('#app')
+
+// 导出pinia实例，以便在其他地方使用
+export { pinia }

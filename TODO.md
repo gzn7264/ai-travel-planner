@@ -37,6 +37,42 @@
 - [ ] 实现复杂指令的解析，如日期范围、预算区间等
 - [ ] 添加指令模糊匹配功能
 
+### 语音识别接口文档
+
+#### 初始化与配置
+- `setCredentials(config)` - 设置科大讯飞API凭证
+  - 参数: `config.apiKey`, `config.appId`, `config.apiSecret`
+  - 示例: `speechRecognitionService.setCredentials({appId: '...', apiKey: '...', apiSecret: '...'})`
+
+- `setRecordingOptions(options)` - 配置录音参数
+  - 参数: `options.sampleRate`(默认16000), `options.frameSize`(默认1280)
+
+#### 录音控制
+- `startRecording()` - 开始录音
+  - 返回: Promise<boolean> 成功返回true
+  - 异常: 凭证未设置时抛出错误
+
+- `stopRecording()` - 停止录音并获取识别结果
+  - 返回: Promise<string> 识别出的文本
+
+- `stop()` - 强制停止所有操作（录音和WebSocket连接）
+
+#### 语音识别与指令解析
+- `recognizeSpeech(audioBlob)` - 识别音频内容
+  - 返回: Promise<string> 识别文本，无凭证时返回模拟数据
+
+- `stopAndRecognize()` - 停止录音并识别，同时解析指令
+  - 返回: Promise<{originalText: string, parsedCommand: object}>
+
+- `parseSpeechCommand(text)` - 解析语音指令文本
+  - 返回: 包含目的地、天数、预算、偏好等信息的对象
+
+#### 实现特点
+- WebSocket实时识别，支持流式结果返回
+- 完善的错误处理和降级机制
+- 支持凭证验证和模拟数据回退
+- 动态加载所需依赖（RecorderManager、CryptoJS）
+
 ## 2. AI行程规划功能
 
 ### 大语言模型API集成
