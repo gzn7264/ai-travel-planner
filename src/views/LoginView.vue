@@ -81,28 +81,32 @@ const login = async () => {
   error.value = ''
   
   try {
-    // 调用登录API
-    // 这里使用模拟数据，实际应该调用userStore的login方法
-    const response = await auth.login(loginForm.email, loginForm.password)
+    // 调用用户存储中的登录方法
+    const result = await userStore.login({
+      email: loginForm.email,
+      password: loginForm.password
+    })
     
-    // 保存用户信息和token
-    userStore.user = response.data.user
-    userStore.isAuthenticated = true
-    localStorage.setItem('token', response.data.token)
-    
-    if (rememberMe.value) {
-      localStorage.setItem('remember_me', 'true')
-    } else {
-      localStorage.removeItem('remember_me')
-    }
-    
-    // 加载用户数据
-    userStore.loadUserData()
+    if (result.success) {
+      // 根据需要保存记住我设置
+      if (rememberMe.value) {
+        localStorage.setItem('remember_me', 'true')
+      } else {
+        localStorage.removeItem('remember_me')
+      }
+      
+      // 加载用户数据
+      userStore.loadUserData()
     
     // 跳转到首页
-    router.push('/')
+      router.push('/')
+    } else {
+      // 登录失败，显示错误信息
+      error.value = result.error || '登录失败，请检查用户名和密码'
+    }
   } catch (err) {
-    error.value = err.message || '登录失败，请检查邮箱和密码'
+    error.value = err.message || '登录失败，请稍后重试'
+    console.error('登录错误:', err)
   } finally {
     isLoading.value = false
   }
